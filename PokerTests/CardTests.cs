@@ -33,7 +33,7 @@ namespace PokerTests
         [TestCase("Q♠", Rank.Queen, Suit.Spades)]
         [TestCase("K♠", Rank.King, Suit.Spades)]
         [TestCase("A♠", Rank.Ace, Suit.Spades)]
-        public void Parse_ReturnsCard(string value, Rank expectedRank, Suit expectedSuit)
+        public void ParseReturnsCard(string value, Rank expectedRank, Suit expectedSuit)
         {
             var card = Card.Parse(value);
 

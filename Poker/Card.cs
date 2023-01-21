@@ -28,6 +28,11 @@ namespace Poker
             return new Card(rank, suit);
         }
 
+        public override string ToString()
+        {
+            return Rank.ToString() + Suit.ToString();
+        }
+
         private static Suit ParseSuit(char value)
         {
             switch (value)

@@ -5,12 +5,7 @@ namespace Poker.Hands
 {
     public class TwoPairs : Hand  
     {
-        public override bool HasHand(List<Card> cards)
-        {
-            return cards.GroupBy(card => card.Rank)
-                .Where(group => group.Count() >= 2)
-                .Count() >= 2;
-        }
+        private int Pair = 2;
 
         public override bool TryGetHand(List<Card> cards, out List<Card> hand)
         {
@@ -19,12 +14,11 @@ namespace Poker.Hands
             var pairs = cards
                 .OrderBy(card => card.Rank)
                 .GroupBy(card => card.Rank)
-                .FirstOrDefault(group => group.Count() == 2)
-                .ToList();
+                .FirstOrDefault(group => group.Count() >= Pair);
 
-            if (pairs.Count >= 2) 
+            if (pairs != null) 
             {
-                hand = pairs.Take(2).ToList();
+                hand = pairs.Take(Pair).ToList();
             }
 
             return hand != null;

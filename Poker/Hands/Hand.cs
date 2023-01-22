@@ -8,7 +8,9 @@ namespace Poker.Hands
     {
         public virtual bool HasHand(List<Card> cards)
         {
-            return false;
+            List<Card> hand;
+
+            return TryGetHand(cards, out hand);
         }
 
         public virtual bool TryGetHand(List<Card> cards, out List<Card> hand)

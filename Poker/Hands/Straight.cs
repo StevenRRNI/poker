@@ -7,8 +7,10 @@ namespace Poker.Hands
     {
         private const int RequiredCards = 5;
 
-        public override bool HasHand(List<Card> cards)
+        public override bool TryGetHand(List<Card> cards, out List<Card> hand)
         {
+            hand = null;
+
             var orderedList = cards.OrderBy(c => c.Rank).ToList();
 
             List<Card> cardsInSequence = new List<Card>();
@@ -33,6 +35,7 @@ namespace Poker.Hands
 
                 if (cardsInSequence.Count == RequiredCards - 1)
                 {
+                    hand = cardsInSequence;
                     return true;
                 }
             }

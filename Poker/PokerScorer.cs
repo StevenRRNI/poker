@@ -13,7 +13,7 @@ namespace Poker
             new FullHouse(),
             new Flush(),
             new Straight(),  
-            new ThreeofAKind(),
+            new ThreeOfAKind(),
             new TwoPairs(),
             new Pair(),
         };   

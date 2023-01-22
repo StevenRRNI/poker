@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Poker.Hands
 {
@@ -10,9 +7,11 @@ namespace Poker.Hands
     {
         private const int RequiredCards = 5;
 
-        public override bool HasHand(List<Card> cards)
+        public override bool TryGetHand(List<Card> cards, out List<Card> hand)
         {
-            var groups =  cards.GroupBy(card => card.Suit)
+            hand = null;
+
+            var groups = cards.GroupBy(card => card.Suit)
                 .Where(group => group.Count() >= RequiredCards);
 
             foreach (var group in groups)
@@ -21,7 +20,7 @@ namespace Poker.Hands
 
                 List<Card> cardsInSequence = new List<Card>();
 
-                for (int index = 0; index < orderedList.Count - 1; index++) 
+                for (int index = 0; index < orderedList.Count - 1; index++)
                 {
                     var card = orderedList[index];
                     var nextCard = orderedList[index + 1];
@@ -41,8 +40,9 @@ namespace Poker.Hands
 
                     if (cardsInSequence.Count == RequiredCards - 1)
                     {
+                        hand = cardsInSequence;
                         return true;
-                    }                   
+                    }
                 }
             }
 

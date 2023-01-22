@@ -42,7 +42,7 @@ namespace PokerTests
         [TestCase("5♠,5♥,5♦,4♥,3♥", true)]
         public void HandHasThreeOfAKind(string cardsString, bool expectedResult)
         {
-            HandTest(cardsString, expectedResult, new ThreeofAKind());
+            HandTest(cardsString, expectedResult, new ThreeOfAKind());
         }
 
         [TestCase("2♥,3♥,4♥,5♥,6♥", true)]

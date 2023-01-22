@@ -1,11 +1,26 @@
 ﻿using NUnit.Framework;
 using Poker;
 using Poker.Hands;
+using System.Collections.Generic;
 
 namespace PokerTests
 {
     public class HandTests
     {
+        [TestCase("2♥,3♥,4♥,5♥,8♥", true, "2♥,3♥,4♥,5♥,8♥")]
+        [TestCase("2♥,3♥,4♥,5♥,8♣", false, "")]
+        [TestCase("2♥,3♥,4♥,5♥,8♥,9♥", true, "3♥,4♥,5♥,8♥,9♥")]
+        public void TryGetFlushReturnsResult(string cardsString, bool expectedResult, string expectedCards)
+        {
+            var cards = Cards.Parse(cardsString);
+
+            List<Card> outputCards;
+
+            bool result = new Flush().TryGetHand(cards, out outputCards);
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
         [TestCase("5♠,5♥", true)] // Different suits
         [TestCase("5♠,5♠", true)] // Same suits
         [TestCase("5♠,A♥", false)] // No match
@@ -25,7 +40,7 @@ namespace PokerTests
         }
 
         [TestCase("5♠,5♥,5♦,4♥,3♥", true)]
-        public void Hand_HasThreeOfAKind(string cardsString, bool expectedResult)
+        public void HandHasThreeOfAKind(string cardsString, bool expectedResult)
         {
             HandTest(cardsString, expectedResult, new ThreeofAKind());
         }

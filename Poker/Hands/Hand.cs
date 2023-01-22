@@ -10,5 +10,12 @@ namespace Poker.Hands
         {
             return false;
         }
+
+        public virtual bool TryGetHand(List<Card> cards, out List<Card> hand)
+        {
+            hand = null;
+
+            return false;
+        }
     }
 }

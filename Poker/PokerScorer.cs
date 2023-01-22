@@ -1,5 +1,6 @@
 ﻿using Poker.Hands;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Poker
 {
@@ -9,29 +10,43 @@ namespace Poker
         {
             new StraightFlush(),
             new FourOfAKind(),
-            new FullHouse(),   
-            new Straight(),
+            new FullHouse(),
             new Flush(),
+            new Straight(),  
             new ThreeofAKind(),
             new TwoPairs(),
             new Pair(),
         };   
 
-        public string CalculateBestHand(List<Card> own, List<Card> shared)
+        public string CalculateBestHand(List<Card> own, List<Card> shared, PokerVariant variant)
         {
-            List<Card> allCards = new List<Card>();
-            allCards.AddRange(own);
-            allCards.AddRange(shared);
+            Hand bestHand = null;
 
-            foreach (Hand hand in DefaultHandRanking)
+            var ownHandCombinations = own.GenerateCombinations(variant.RequiredHoleCards, variant.RequiredHoleCards);
+
+            var sharedHandCombinations = shared.GenerateCombinations(5 - variant.RequiredHoleCards, 5 - variant.RequiredHoleCards);
+
+            foreach (var ownHandCombination in ownHandCombinations)
             {
-                if (hand.HasHand(allCards))
+                foreach (var sharedHandCombination in sharedHandCombinations)
                 {
-                    return hand.GetType().Name;
+                    var combination = ownHandCombination.Concat(sharedHandCombination).ToList();
+
+                    foreach (Hand hand in DefaultHandRanking)
+                    {
+                        if (hand.HasHand(combination))
+                        {
+                            if (bestHand == null || 
+                                DefaultHandRanking.IndexOf(hand) < DefaultHandRanking.IndexOf(bestHand))
+                            {
+                                bestHand = hand;
+                            }
+                        }
+                    }
                 }
             }
 
-            return "HighCard";
+            return bestHand == null ? "HighCard" : bestHand.GetType().Name;
         }
     }
 }

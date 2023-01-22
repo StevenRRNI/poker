@@ -15,43 +15,35 @@ namespace Poker
             return value.Split(",").Select(val => PlayingCard.Parse(val)).ToList();
         }
 
-        public static List<List<PlayingCard>> GenerateCombinations(this List<PlayingCard> cards, int? minimum = 1, int? maxium = 1)
+        public static List<List<PlayingCard>> GenerateCombinations(this List<PlayingCard> cards, int? minimumCards = 1, int? maxiumCards = 1)
         {
-            PlayingCard[][] combinations = FastPowerSet(cards.ToArray());
+            List<List<PlayingCard>> combinations = new List<List<PlayingCard>>();
 
-            List<List<PlayingCard>> combinationsList = new List<List<PlayingCard>>();
+            // Recursive method for find all combinations, could likely be done iteratively
+            GetCombinations(cards, -1, combinations, new List<PlayingCard>());
 
-            foreach (var combination in combinations)
-            {
-                if (combination.Length >= minimum && combination.Length <= maxium)
-                {
-                    combinationsList.Add(combination.ToList());
-                }
-            }
-
-            return combinationsList;
+            // Feels like this could be done in the above method to avoid wasted work
+            return combinations.Where(combination => combination.Count >= minimumCards && combination.Count <= maxiumCards).ToList();
         }
 
-        public static T[][] FastPowerSet<T>(T[] seq)
+        private static void GetCombinations(List<PlayingCard> cards, int position, List<List<PlayingCard>> combinations, List<PlayingCard> current)
         {
-            var powerSet = new T[1 << seq.Length][];
-            powerSet[0] = new T[0]; // starting only with empty set
-
-            for (int i = 0; i < seq.Length; i++)
+            if (position >= cards.Count)
             {
-                var cur = seq[i];
-                int count = 1 << i; // doubling list each time
-                for (int j = 0; j < count; j++)
-                {
-                    var source = powerSet[j];
-                    var destination = powerSet[count + j] = new T[source.Length + 1];
-                    for (int q = 0; q < source.Length; q++)
-                        destination[q] = source[q];
-                    destination[source.Length] = cur;
-                }
+                return;
             }
 
-            return powerSet;
+            combinations.Add(current);
+
+            for (int index  = position + 1; index < cards.Count; index++)
+            {
+                var newCombination = new List<PlayingCard>(current)
+                {
+                    cards[index]
+                };
+
+                GetCombinations(cards, index, combinations, newCombination);
+            }
         }
     }
 }

@@ -43,6 +43,9 @@ namespace Poker
 
     public class TexasHoldEm : PokerVariant
     { 
+        /// <summary>
+        /// Non-standard TexasHoldEm as both hole cards must be used
+        /// </summary>
         public TexasHoldEm() : base(2, 5, 2) { }
     }
 

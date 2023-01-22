@@ -34,6 +34,7 @@ namespace PokerTests
 
 
         [TestCase("5♠,5♥,4♠,4♥", true)]
+        [TestCase("4♠,4♥", false)]
         public void HandHasTwoPair(string cardsString, bool expectedResult)
         {
             HandTest(cardsString, expectedResult, new TwoPairs());

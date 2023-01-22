@@ -12,12 +12,7 @@ namespace Poker.Hands
             return TryGetHand(cards, out hand);
         }
 
-        public virtual bool TryGetHand(List<Card> cards, out List<Card> hand)
-        {
-            hand = null;
-
-            return false;
-        }
+        public abstract bool TryGetHand(List<Card> cards, out List<Card> hand);
 
         public bool TryGetSequence(List<Card> cards, int sequenceLength, out List<Card> hand)
         {

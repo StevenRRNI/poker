@@ -14,11 +14,11 @@ namespace Poker.Hands
             var pairs = cards
                 .OrderBy(card => card.Rank)
                 .GroupBy(card => card.Rank)
-                .FirstOrDefault(group => group.Count() >= Pair);
+                .Where(group => group.Count() >= Pair);
 
-            if (pairs != null) 
+            if (pairs != null && pairs.Count() >= 2) 
             {
-                hand = pairs.Take(Pair).ToList();
+                hand = pairs.SelectMany(pair => pair.Take(2)).ToList();
             }
 
             return hand != null;

@@ -9,7 +9,8 @@ namespace PokerTests
     {
         [TestCase("2♠,3♠", "5♠,A♥,K♦,4♠,K♠", "TexasHoldEm", "Flush")]
         [TestCase("2♠,3♦", "5♠,A♠,K♠,4♠,K♦", "TexasHoldEm", "Straight")] // Flush under normal rules but must use two means a straight
-        [TestCase("2♠,3♦,2♣,3♣", "5♠,A♠,K♠,4♠,K♦", "Omaha", "Straight")]
+        [TestCase("2♠,3♦,2♣,3♣", "5♠,A♠,K♠,4♠,K♦", "Omaha", "Straight")] // Not a flush because two hole cards must be used
+        [TestCase("4♠,4♦,4♣,4♥", "5♠,A♠,Q♠,6♠,K♦", "Omaha", "Pair")] // Can only use two hole cards which rules out four of a kind
         public void CalculateBestHandShouldReturnBestHand(string hand, string shared, string variant, string expectedBestHand)
         {
             var sut = new PokerScorer();

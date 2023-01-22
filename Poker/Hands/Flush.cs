@@ -5,9 +5,11 @@ namespace Poker.Hands
 {
     public class Flush : Hand
     {
+        private const int RequiredCards = 5;
+
         public override bool TryGetHand(List<Card> cards, out List<Card> hand)
         {
-            var flush = cards.GroupBy(card => card.Suit).FirstOrDefault(group => group.Count() >= 5);
+            var flush = cards.GroupBy(card => card.Suit).FirstOrDefault(group => group.Count() >= RequiredCards);
 
             if (flush != null)
             {

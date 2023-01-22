@@ -13,7 +13,7 @@ namespace Poker.Hands
 
             if (flush != null)
             {
-                hand =  flush.OrderByDescending(card => card.Rank).Take(5).ToList();
+                hand =  flush.OrderBy(card => card.Rank).TakeLast(RequiredCards).ToList();
                 
                 return true;
             }

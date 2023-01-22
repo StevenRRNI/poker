@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Poker
 {
@@ -31,6 +32,20 @@ namespace Poker
         public override string ToString()
         {
             return Rank.ToString() + Suit.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if ((obj == null) || !GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                PlayingCard card = (PlayingCard)obj;
+
+                return Rank == card.Rank && Suit == card.Suit;
+            }
         }
 
         private static Suit ParseSuit(char value)

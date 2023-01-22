@@ -5,22 +5,22 @@ namespace Poker.Hands
 {
     public abstract class Hand
     {
-        public virtual bool HasHand(List<Card> cards)
+        public virtual bool HasHand(List<PlayingCard> cards)
         {
-            List<Card> hand;
+            List<PlayingCard> hand;
 
             return TryGetHand(cards, out hand);
         }
 
-        public abstract bool TryGetHand(List<Card> cards, out List<Card> hand);
+        public abstract bool TryGetHand(List<PlayingCard> cards, out List<PlayingCard> hand);
 
-        public bool TryGetSequence(List<Card> cards, int sequenceLength, out List<Card> hand)
+        public bool TryGetSequence(List<PlayingCard> cards, int sequenceLength, out List<PlayingCard> hand)
         {
             hand = null;
 
             var orderedList = cards.OrderBy(c => c.Rank).ToList();
 
-            List<Card> cardsInSequence = new List<Card>();
+            List<PlayingCard> cardsInSequence = new List<PlayingCard>();
 
             for (int index = 0; index < orderedList.Count - 1; index++)
             {

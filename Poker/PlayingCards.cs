@@ -3,18 +3,18 @@ using System.Linq;
 
 namespace Poker
 {
-    public static class Cards
+    public static class PlayingCards
     {
-        public static List<Card> Parse(string value)
+        public static List<PlayingCard> Parse(string value)
         {
-            return value.Split(",").Select(val => Card.Parse(val)).ToList();
+            return value.Split(",").Select(val => PlayingCard.Parse(val)).ToList();
         }
 
-        public static List<List<Card>> GenerateCombinations(this List<Card> cards, int? minimum = 1, int? maxium = 1)
+        public static List<List<PlayingCard>> GenerateCombinations(this List<PlayingCard> cards, int? minimum = 1, int? maxium = 1)
         {
-            Card[][] combinations = FastPowerSet(cards.ToArray());
+            PlayingCard[][] combinations = FastPowerSet(cards.ToArray());
 
-            List<List<Card>> combinationsList = new List<List<Card>>();
+            List<List<PlayingCard>> combinationsList = new List<List<PlayingCard>>();
 
             foreach (var combination in combinations)
             {

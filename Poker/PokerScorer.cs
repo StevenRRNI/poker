@@ -30,7 +30,7 @@ namespace Poker
             Rankings = rankings;
         }
 
-        public string CalculateBestHand(List<Card> own, List<Card> shared, PokerVariant variant)
+        public string CalculateBestHand(List<PlayingCard> own, List<PlayingCard> shared, PokerVariant variant)
         {
             Hand bestHand = null;
 

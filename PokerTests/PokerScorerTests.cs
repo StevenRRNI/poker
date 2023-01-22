@@ -17,8 +17,8 @@ namespace PokerTests
         {
             var sut = new PokerScorer();
 
-            var handCards = Cards.Parse(hand);
-            var sharedCards = Cards.Parse(shared);
+            var handCards = PlayingCards.Parse(hand);
+            var sharedCards = PlayingCards.Parse(shared);
 
             // Sanity check for tests but could be part of validation in scorer
             bool hasDuplicates = handCards
@@ -28,7 +28,7 @@ namespace PokerTests
 
             Assert.IsFalse(hasDuplicates, "Duplicate cards found");
 
-            var result = sut.CalculateBestHand(Cards.Parse(hand), Cards.Parse(shared), PokerVariants.Parse(variant));
+            var result = sut.CalculateBestHand(PlayingCards.Parse(hand), PlayingCards.Parse(shared), PokerVariant.Parse(variant));
 
             Assert.AreEqual(expectedBestHand, result);
         }
@@ -44,7 +44,7 @@ namespace PokerTests
 
             var sut = new PokerScorer(rankings);
 
-            var result = sut.CalculateBestHand(Cards.Parse(hand), Cards.Parse(shared), PokerVariants.Parse(variant));
+            var result = sut.CalculateBestHand(PlayingCards.Parse(hand), PlayingCards.Parse(shared), PokerVariant.Parse(variant));
 
             Assert.AreEqual(expectedBestHand, result);
         }
@@ -58,14 +58,14 @@ namespace PokerTests
 
             var sut = new PokerScorer(rankings);
 
-            var result = sut.CalculateBestHand(Cards.Parse(hand), Cards.Parse(shared), PokerVariants.Parse(variant));
+            var result = sut.CalculateBestHand(PlayingCards.Parse(hand), PlayingCards.Parse(shared), PokerVariant.Parse(variant));
 
             Assert.AreEqual(expectedBestHand, result);
         }
 
         public class Royalty : Hand
         {
-            public override bool TryGetHand(List<Card> cards, out List<Card> hand)
+            public override bool TryGetHand(List<PlayingCard> cards, out List<PlayingCard> hand)
             {
                 hand = null;
 

@@ -12,7 +12,7 @@ namespace Poker.Hands
             Count = count;
         }
 
-        public override bool TryGetHand(List<Card> cards, out List<Card> hand)
+        public override bool TryGetHand(List<PlayingCard> cards, out List<PlayingCard> hand)
         {
             hand = null;
 

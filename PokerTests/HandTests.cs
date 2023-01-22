@@ -12,9 +12,9 @@ namespace PokerTests
         [TestCase("2♥,3♥,4♥,5♥,8♥,9♥", true, "3♥,4♥,5♥,8♥,9♥")]
         public void TryGetFlushReturnsResult(string cardsString, bool expectedResult, string expectedCards)
         {
-            var cards = Cards.Parse(cardsString);
+            var cards = PlayingCards.Parse(cardsString);
 
-            List<Card> outputCards;
+            List<PlayingCard> outputCards;
 
             bool result = new Flush().TryGetHand(cards, out outputCards);
 
@@ -86,7 +86,7 @@ namespace PokerTests
 
         private void HandTest(string cardsString, bool expectedResult, Hand hand)
         {
-            var cards = Cards.Parse(cardsString);
+            var cards = PlayingCards.Parse(cardsString);
 
             Assert.AreEqual(hand.HasHand(cards), expectedResult);
         }

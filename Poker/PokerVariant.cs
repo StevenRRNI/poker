@@ -1,4 +1,6 @@
-﻿namespace Poker
+﻿using System;
+
+namespace Poker
 {
     public class PokerVariant
     {
@@ -13,6 +15,24 @@
             HoleCardsCount = holeCardsCount;
             CommunityCardsCount = communityCardsCount;
             RequiredHoleCards = requiredHoleCards;
+        }
+
+        public static PokerVariant Parse(string value)
+        {
+            switch (value.ToLower())
+            {
+                case "texasholdem":
+                    return PokerVariants.TexasHoldEm;
+
+                case "fivecarddraw":
+                    return PokerVariants.FiveCardDraw;
+
+                case "omaha":
+                    return PokerVariants.Omaha;
+
+                default:
+                    throw new ArgumentException("Unknown variant: " + value);
+            }
         }
     }
 

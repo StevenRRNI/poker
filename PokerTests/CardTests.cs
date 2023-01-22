@@ -35,7 +35,7 @@ namespace PokerTests
         [TestCase("A♠", Rank.Ace, Suit.Spades)]
         public void ParseReturnsCard(string value, Rank expectedRank, Suit expectedSuit)
         {
-            var card = Card.Parse(value);
+            var card = PlayingCard.Parse(value);
 
             Assert.AreEqual(expectedRank, card.Rank);
             Assert.AreEqual(expectedSuit, card.Suit);

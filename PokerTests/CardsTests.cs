@@ -15,7 +15,7 @@ namespace PokerTests
         [TestCase("2♠,3♠,2♦,3♦", -1, 5, 16)]
         public void GenerateCombinationsReturnsExpectedResult(string hand, int minCards, int maxCards, int expectedCount)
         {
-            var combinations = Cards.Parse(hand).GenerateCombinations(minCards, maxCards);
+            var combinations = PlayingCards.Parse(hand).GenerateCombinations(minCards, maxCards);
 
             Assert.AreEqual(expectedCount, combinations.Count);
         }

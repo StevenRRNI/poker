@@ -14,13 +14,13 @@ namespace PokerTests
         [Test]
         public void DeckReturnsTrueForAllHands()
         {
-            List<Card> cards = new List<Card>();
+            List<PlayingCard> cards = new List<PlayingCard>();
 
             foreach (Suit suit in Enum.GetValues(typeof(Suit)))
             {
                 foreach (Rank rank in Enum.GetValues(typeof(Rank)))
                 {
-                    cards.Add(new Card(rank, suit));
+                    cards.Add(new PlayingCard(rank, suit));
                 }
             }
 

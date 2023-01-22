@@ -7,7 +7,7 @@ namespace Poker.Hands
     {
         private const int RequiredCards = 5;
 
-        public override bool TryGetHand(List<Card> cards, out List<Card> hand)
+        public override bool TryGetHand(List<PlayingCard> cards, out List<PlayingCard> hand)
         {
             hand = null;
 

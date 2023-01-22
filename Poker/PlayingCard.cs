@@ -2,19 +2,19 @@
 
 namespace Poker
 {
-    public class Card
+    public class PlayingCard
     {
         public Rank Rank { get; private set; }
 
         public Suit Suit { get; private set; }
 
-        public Card(Rank rank, Suit suit) 
+        public PlayingCard(Rank rank, Suit suit) 
         {
             Rank = rank;
             Suit = suit;
         }
 
-        public static Card Parse(string value) 
+        public static PlayingCard Parse(string value) 
         {
             if (string.IsNullOrEmpty(value) || value.Length < 2)
             {
@@ -25,7 +25,7 @@ namespace Poker
 
             Rank rank = ParseRank(value.Remove(value.Length - 1));
             
-            return new Card(rank, suit);
+            return new PlayingCard(rank, suit);
         }
 
         public override string ToString()

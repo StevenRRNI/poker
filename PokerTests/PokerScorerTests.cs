@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using Poker;
+using Poker.Hands;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PokerTests
@@ -29,6 +31,55 @@ namespace PokerTests
             var result = sut.CalculateBestHand(Cards.Parse(hand), Cards.Parse(shared), PokerVariants.Parse(variant));
 
             Assert.AreEqual(expectedBestHand, result);
+        }
+
+        [TestCase("2♠,3♠", "5♠,A♥,Q♦,4♠,K♠", "TexasHoldEm", "HighCard")] // Flush under normal rules but no pairs
+        [TestCase("2♠,3♦", "5♠,A♠,K♠,4♠,3♦", "TexasHoldEm", "Pair")]
+        public void CalculateBestHandWithCustomRankingsShouldReturnBestHand(string hand, string shared, string variant, string expectedBestHand)
+        {
+            List<Hand> rankings = new List<Hand>()
+            {
+                new Pair(),
+            };
+
+            var sut = new PokerScorer(rankings);
+
+            var result = sut.CalculateBestHand(Cards.Parse(hand), Cards.Parse(shared), PokerVariants.Parse(variant));
+
+            Assert.AreEqual(expectedBestHand, result);
+        }
+
+        [TestCase("J♠,K♠", "5♠,Q♥,Q♦,Q♠,3♠", "TexasHoldEm", "Royalty")]
+        public void CalculateBestHandWithCustomHandShouldReturnBestHand(string hand, string shared, string variant, string expectedBestHand)
+        {
+            List<Hand> rankings = new List<Hand>(PokerScorer.DefaultHandRanking);
+
+            rankings.Insert(0, new Royalty());
+
+            var sut = new PokerScorer(rankings);
+
+            var result = sut.CalculateBestHand(Cards.Parse(hand), Cards.Parse(shared), PokerVariants.Parse(variant));
+
+            Assert.AreEqual(expectedBestHand, result);
+        }
+
+        public class Royalty : Hand
+        {
+            public override bool TryGetHand(List<Card> cards, out List<Card> hand)
+            {
+                hand = null;
+
+                var royals = cards.Where(card => card.Rank == Rank.Queen || card.Rank == Rank.Jack || card.Rank == Rank.King);
+
+                if (royals.Count() >= 5)
+                {
+                    hand = royals.Take(5).ToList();
+
+                    return true;
+                }
+
+                return false;
+            }
         }
     }
 }

@@ -16,7 +16,19 @@ namespace Poker
             new ThreeOfAKind(),
             new TwoPairs(),
             new Pair(),
-        };   
+        };
+
+        private List<Hand> Rankings;
+
+        public PokerScorer()
+        {
+            Rankings= DefaultHandRanking;
+        }
+
+        public PokerScorer(List<Hand> rankings) 
+        {
+            Rankings = rankings;
+        }
 
         public string CalculateBestHand(List<Card> own, List<Card> shared, PokerVariant variant)
         {
@@ -32,12 +44,12 @@ namespace Poker
                 {
                     var combination = ownHandCombination.Concat(sharedHandCombination).ToList();
 
-                    foreach (Hand hand in DefaultHandRanking)
+                    foreach (Hand hand in Rankings)
                     {
                         if (hand.HasHand(combination))
                         {
-                            if (bestHand == null || 
-                                DefaultHandRanking.IndexOf(hand) < DefaultHandRanking.IndexOf(bestHand))
+                            if (bestHand == null ||
+                                Rankings.IndexOf(hand) < Rankings.IndexOf(bestHand))
                             {
                                 bestHand = hand;
                             }

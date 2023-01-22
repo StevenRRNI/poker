@@ -7,6 +7,11 @@ namespace Poker
     {
         public static List<PlayingCard> Parse(string value)
         {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return new List<PlayingCard>();
+            }
+
             return value.Split(",").Select(val => PlayingCard.Parse(val)).ToList();
         }
 
